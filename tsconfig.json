@@ -10,8 +10,9 @@
         "module": "commonjs",
         "baseUrl": ".",
         "resolveJsonModule": true,
-        "jsx": "react",
-        "jsxFactory": "h"
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment"
     },
     "paths": {
         "*": ["node_modules/*"]

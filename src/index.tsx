@@ -1,24 +1,11 @@
+/** global h */
 import { setup } from 'goober';
-import { h } from 'preact';
-import parseDay from './parseDay';
 
+import { Game, State } from './types';
+import renderer from './render';
+
+// @ts-ignore
 setup(h);
-
-type State = {
-  name: string;
-  day: number;
-  playRate: 1 | 2 | 3;
-  paused: boolean;
-};
-
-type Game = {
-  stop: number;
-  lastTick: number;
-  tickLength: number;
-  lastRender: number;
-  gameStart: number;
-  dayClock: number;
-};
 
 ;(function () {
   const game: Game = {
@@ -33,6 +20,17 @@ type Game = {
     paused: false,
   };
 
+  const render = renderer(state);
+
+  // TODO: move these to another file
+  window.addEventListener('pausechange', (e: CustomEvent) => {
+    state.paused = e.detail.paused;
+  });
+
+  window.addEventListener('playspeedchange', (e: CustomEvent) => {
+    state.playRate = e.detail.speed;
+  });
+
   const main = (ts: number) => {
     game.stop = window.requestAnimationFrame(main);
     const nextTick = game.lastTick + game.tickLength;
@@ -44,7 +42,7 @@ type Game = {
     }
 
     queueUpdates(numTicks);
-    // render(ts);
+    render(ts, state);
     game.lastRender = ts;
   };
 
@@ -65,27 +63,14 @@ type Game = {
     if (game.dayClock >= 1000) {
       state.day += 1;
       game.dayClock = 0;
-      console.log(parseDay(state.day));
     }
-    // if (timeSinceStart > state.day) {
-    //   state.day = timeSinceStart;
-    //   console.log(parseDay(state.day))
-    // }
   };
 
   game.lastTick = performance.now();
   game.lastRender = game.lastTick;
   game.gameStart = game.lastTick;
 
-  console.log(parseDay(state.day));
-  // @ts-ignore
-  window.setPlaybackRate = (speed: 1 | 2 | 3) => {
-    state.playRate = speed;
-  };
-  // @ts-ignore
-  window.setPaused = (paused: boolean) => {
-    state.paused = paused;
-  }
-  main(performance.now());
+  const now = performance.now();
+  main(now);
 }());
 
