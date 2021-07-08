@@ -9,7 +9,9 @@
         "moduleResolution": "node",
         "module": "commonjs",
         "baseUrl": ".",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "jsx": "react",
+        "jsxFactory": "h"
     },
     "paths": {
         "*": ["node_modules/*"]
