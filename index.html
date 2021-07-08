@@ -16,6 +16,18 @@
             body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
             }
+
+            main {
+              display: grid;
+              grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, max-content);
+              grid-template-areas:
+                      ". . ."
+                      ". . game-speed";
+            }
+
+            #game-speed {
+              grid-area: game-speed;
+            }
         </style>
     </head>
     <body>
