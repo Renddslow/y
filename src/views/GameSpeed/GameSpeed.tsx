@@ -2,7 +2,7 @@ import { styled } from 'goober';
 
 import withRender from '../../utils/withRender';
 import { State } from '../../types';
-import parseDay from '../../parseDay';
+import { formatDay } from '../../parseDay';
 import emit from '../../utils/emitter';
 
 type Props = {
@@ -84,7 +84,7 @@ const GameSpeed = (props: Props) => {
 
   return (
     <Box>
-      <span>{parseDay(props.state.day)}</span>
+      <span>{formatDay(props.state.day)}</span>
       <ButtonRow>
         <PlaybackButton onClick={handlePauseClick} active={props.state.paused}>
           <Pause />

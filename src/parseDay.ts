@@ -1,6 +1,12 @@
-const START_YEAR = 1750;
-
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+type YDate = {
+  month: string;
+  day: number;
+  year: number;
+}
+
+const START_YEAR = 1750;
 
 const cardinal = (n: number) => {
   const formatter = new Intl.PluralRules('en-us', { type: 'ordinal' });
@@ -13,7 +19,7 @@ const cardinal = (n: number) => {
   }
 };
 
-const parseDay = (day: number) => {
+const parseDay = (day: number): YDate => {
   const year = START_YEAR - Math.floor(day / 365);
 
   const dayInYear = day % 365;
@@ -34,7 +40,16 @@ const parseDay = (day: number) => {
   const month = MONTHS[monthIndex];
   const dayOfMonth = monthLengths[monthIndex] - (acc - dayInYear);
 
-  return `${cardinal(dayOfMonth)} of ${month}, ${year} BCE`;
+  return {
+    month,
+    year,
+    day: dayOfMonth,
+  };
+};
+
+export const formatDay = (day: number) => {
+  const date = parseDay(day);
+  return `${cardinal(date.day)} of ${date.month}, ${date.year} BCE`
 };
 
 export default parseDay;

@@ -19,19 +19,47 @@
 
             main {
               display: grid;
-              grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, max-content);
+              height: 100%;
+              align-items: end;
+              grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
               grid-template-areas:
-                      ". . ."
-                      ". . game-speed";
+                      "character-view . ."
+                      "character-view . .";
             }
 
             #game-speed {
-              grid-area: game-speed;
+              position: absolute;
+              right: 0;
+              bottom: 0;
+            }
+
+            #character-view {
+              grid-area: character-view;
+              height: 100%;
+            }
+
+            *[data-tooltip] {
+              position: relative;
+            }
+
+            *[data-tooltip]::after {
+              content: attr(data-tooltip);
+              background: #000;
+              color: #fff;
+              position: absolute;
+              width: max-content;
+              padding: 4px 8px;
+              font-size: 12px;
+              font-weight: 600;
+              border-radius: 4px;
+              bottom: -24px;
+              left: 0;
             }
         </style>
     </head>
     <body>
         <main>
+            <div id="character-view"></div>
             <div id="game-speed"></div>
         </main>
         <script type="module" src="./src/index.tsx"></script>

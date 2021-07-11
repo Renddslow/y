@@ -4,6 +4,7 @@ import { has, get } from 'dot-prop';
 
 import { State } from './types';
 import GameSpeed from './views/GameSpeed/GameSpeed';
+import Character from './views/Character/Character';
 
 type Renderer = (state: State, ts: number) => void;
 type Subscriptions = {
@@ -22,6 +23,7 @@ const visitAndRender = (subs: Subscriptions, state: State) => {
 
 const renderer = (startingState: State) => {
   const subscriptions: Subscriptions = {
+    age: [Character],
     day: [GameSpeed],
     playSpeed: [GameSpeed],
     paused: [GameSpeed],

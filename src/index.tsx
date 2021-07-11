@@ -3,6 +3,7 @@ import { setup } from 'goober';
 
 import { Game, State } from './types';
 import renderer from './render';
+import {birthday, startingAge, tribe} from './utils/random';
 
 // @ts-ignore
 setup(h);
@@ -14,10 +15,15 @@ setup(h);
   } as Game;
 
   const state: State = {
-    name: '',
     day: 1,
     playRate: 1,
     paused: false,
+    character: {
+      name: '',
+      age: startingAge(),
+      birthday: birthday(),
+      tribe: tribe(),
+    },
   };
 
   const render = renderer(state);
@@ -62,6 +68,9 @@ setup(h);
 
     if (game.dayClock >= 1000) {
       state.day += 1;
+      if (state.day % 365 === state.character.birthday) {
+        state.character.age++;
+      }
       game.dayClock = 0;
     }
   };
